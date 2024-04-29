@@ -15,27 +15,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "grupo")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Usuario {
-
+public class Grupo {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String nombres;
+    private String descripcion;
 
-    private String apellidos;
+    @OneToMany(mappedBy = "grupo")
+    private List<Local> locales;
 
-    private String telefono;
+    public Grupo(String descripcion, List<Local> locales) {
+        this.descripcion = descripcion;
+        this. locales = locales;
+    }
 
     @ManyToOne
-    @JoinColumn(name = "fk_rol")
-    private Rol rol;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Grupo> grupo;
+    @JoinColumn(name = "fk_dealer")
+    private Usuario usuario;
 
 }
