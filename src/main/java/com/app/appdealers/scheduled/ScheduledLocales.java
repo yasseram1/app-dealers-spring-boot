@@ -3,14 +3,15 @@ package com.app.appdealers.scheduled;
 import java.util.List;
 
 import org.apache.commons.math3.ml.clustering.CentroidCluster;
-import org.apache.commons.math3.ml.clustering.Cluster;
 import org.apache.commons.math3.ml.clustering.KMeansPlusPlusClusterer;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.app.appdealers.entity.Grupo;
 import com.app.appdealers.entity.Local;
+import com.app.appdealers.repository.GrupoRepository;
 import com.app.appdealers.repository.LocalRepository;
 
 @Component
@@ -19,7 +20,10 @@ public class ScheduledLocales {
     @Autowired
     private LocalRepository localRepository;
 
-    @Scheduled(fixedRate = 30000) // Se ejecuta a las 0:25 am
+    @Autowired
+    private GrupoRepository grupoRepository;
+
+    @Scheduled(cron = "0 0 0 * *") // Se ejecuta a media noche
     public void crearGruposDeLocales() {
 
         // Esta funcion lo que debe hacer es
@@ -30,7 +34,7 @@ public class ScheduledLocales {
         List<Local> localWithoutGroup = localRepository.getAllLocalWithoutGroup();
         
         // Creamos un Cluster de K-Means
-        int numeroGrupos = 3;
+        int numeroGrupos = 5; // Cambiarlo cuando se tengan mas comercios
         // int numeroGrupos = localWithoutGroup.size() / 10;
 
         KMeansPlusPlusClusterer<Local> clusterer = new KMeansPlusPlusClusterer<>(numeroGrupos, -1, new EuclideanDistance());
@@ -45,7 +49,15 @@ public class ScheduledLocales {
     private void guardarGruposEnLaDB(List<CentroidCluster<Local>> clusters) {
         for (int i = 0; i < clusters.size(); i++) {
             List<Local> localesDelGrupo = clusters.get(i).getPoints();
+            // Crear nuevo grupo
+            Grupo nuevoGrupo = new Grupo("Grupo número " + (i + 1), localesDelGrupo);
+
+            grupoRepository.save(nuevoGrupo);
+
             for (Local local : localesDelGrupo) {
+                // Guardar los locales en el nuevo grupo
+                local.setGrupo(nuevoGrupo);
+                localRepository.save(local);
                 System.out.println(local.getId() + " " + local.getNombre() + " - Grupo " + (i + 1));
             }
         }

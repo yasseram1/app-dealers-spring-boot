@@ -2,6 +2,7 @@ package com.app.appdealers.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,5 +28,10 @@ public class Grupo {
 
     @OneToMany(mappedBy = "grupo")
     private List<Local> locales;
+
+    public Grupo(String descripcion, List<Local> locales) {
+        this.descripcion = descripcion;
+        this. locales = locales;
+    }
 
 }
