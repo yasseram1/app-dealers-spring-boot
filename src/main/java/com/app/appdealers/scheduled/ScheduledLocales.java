@@ -23,7 +23,7 @@ public class ScheduledLocales {
     @Autowired
     private GrupoRepository grupoRepository;
 
-    @Scheduled(cron = "0 0 0 * *") // Se ejecuta a media noche
+    @Scheduled(cron = "0 0 0 * * ?") // Se ejecuta a media noche
     public void crearGruposDeLocales() {
 
         // Esta funcion lo que debe hacer es
