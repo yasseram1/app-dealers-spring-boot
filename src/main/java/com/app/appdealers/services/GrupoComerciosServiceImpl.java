@@ -8,14 +8,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.app.appdealers.dto.CoordenadasDto;
+import com.app.appdealers.dto.InfoLocalDto;
 import com.app.appdealers.entity.Grupo;
 import com.app.appdealers.entity.Local;
+import com.app.appdealers.entity.Usuario;
 import com.app.appdealers.repository.GrupoRepository;
+import com.app.appdealers.repository.UsuarioRepository;
 import com.app.appdealers.util.response.GrupoComerciosReponse;
 
 @Service
 public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
+
+    @Autowired 
+    private UsuarioRepository usuarioRepository; // Provisional
 
     @Autowired
     private GrupoRepository grupoRepository;
@@ -37,20 +42,28 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
 
             List<Local> locales = grupo.getLocales();
             
-            List<CoordenadasDto> listaCoordenadas = new ArrayList<>();
+            List<InfoLocalDto> listaCoordenadas = new ArrayList<>();
 
             for(int i=0; i<locales.size(); i++) {
                 
                 Local local = locales.get(i);
-                CoordenadasDto coordenadas = new CoordenadasDto();
+                InfoLocalDto infoLocal = new InfoLocalDto();
 
-                coordenadas.setIdCoordenada(local.getCoordenadas().getId());
-                coordenadas.setIdLocal(local.getId());
-                coordenadas.setLatitud(locales.get(i).getCoordenadas().getLatitud());
-                coordenadas.setLongitud(locales.get(i).getCoordenadas().getLongitud());
+                infoLocal.setIdLocal(local.getId());
+                infoLocal.setNombreLocal(local.getNombre());
+                infoLocal.setDireccionLocal(local.getDireccion());
+                infoLocal.setTelefonoLocal(local.getTelefono());
+                infoLocal.setIdCoordenada(local.getCoordenadas().getId());
+                infoLocal.setLatitud(locales.get(i).getCoordenadas().getLatitud());
+                infoLocal.setLongitud(locales.get(i).getCoordenadas().getLongitud());
 
-                listaCoordenadas.add(coordenadas);
+                listaCoordenadas.add(infoLocal);
             }
+
+            Usuario usuario = usuarioRepository.findById(1).get(); // provisional
+            grupo.setUsuario(usuario); // Se debe colocar al usuario que haga la consulta
+
+            grupoRepository.save(grupo);
 
             gcr.setCoordenadasListaComercios(listaCoordenadas);
 

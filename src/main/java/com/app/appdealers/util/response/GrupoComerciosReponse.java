@@ -2,7 +2,7 @@ package com.app.appdealers.util.response;
 
 import java.util.List;
 
-import com.app.appdealers.dto.CoordenadasDto;
+import com.app.appdealers.dto.InfoLocalDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +19,6 @@ public class GrupoComerciosReponse {
     private String mensaje;
     private Integer idGrupo;
     private String descripcionGrupo;
-    private List<CoordenadasDto> coordenadasListaComercios;
+    private List<InfoLocalDto> coordenadasListaComercios;
     
 }

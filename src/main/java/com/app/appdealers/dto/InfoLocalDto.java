@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CoordenadasDto {
+public class InfoLocalDto {
+    private Integer idLocal;
+    private String nombreLocal;
+    private String direccionLocal;
+    private String telefonoLocal;
     private Integer idCoordenada;
     private Double latitud;
     private Double longitud;
-    private Integer idLocal;
 }
