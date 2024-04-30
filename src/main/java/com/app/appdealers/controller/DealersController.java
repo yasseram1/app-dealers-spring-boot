@@ -8,11 +8,13 @@ import com.app.appdealers.util.response.GrupoComerciosReponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
 @RequestMapping("/api/v0/dealers")
+@CrossOrigin
 public class DealersController {
 
     @Autowired
