@@ -11,6 +11,6 @@ import com.app.appdealers.entity.Local;
 @Repository
 public interface LocalRepository extends JpaRepository<Local, Integer>  {
     
-    @Query("SELECT l FROM Local l INNER JOIN EstadoVisita esvi ON l.id = esvi.local.id WHERE esvi.estado.id = 3")
+    @Query("SELECT l FROM Local l INNER JOIN EstadoVisita esvi ON l.id = esvi.local.id WHERE esvi.estado.id = 3 AND l.grupo IS NULL")
     public List<Local> getAllLocalWithoutGroup();
 }

@@ -31,11 +31,15 @@ public class ScheduledLocales {
         // 1. Seleccionar a todos los locales que no cuenten con un grupo [Atraves de un SELECT]
         // 2. Utilizar un algoritmo para agrupar estos locales en grupos de 5 estos grupos estaran formados por los comercios mas cercanos entre si
         // 3. Guardar los locales, ahora ya con un grupo, en la base de datos nuevamente
-
+        int localesXGrupo = 5;
         List<Local> localWithoutGroup = localRepository.getAllLocalWithoutGroup();
         
+        if(localWithoutGroup.size() < localesXGrupo) {
+            System.out.println("No hay suficientes locales para hacer la agrupación");
+            return;
+        }
         // Creamos un Cluster de K-Means
-        int numeroGrupos = 5; // Cambiarlo cuando se tengan mas comercios
+        int numeroGrupos = localWithoutGroup.size() / localesXGrupo; //[5] Cambiarlo cuando se tengan mas comercios
         // int numeroGrupos = localWithoutGroup.size() / 10;
 
         KMeansPlusPlusClusterer<Local> clusterer = new KMeansPlusPlusClusterer<>(numeroGrupos, -1, new EuclideanDistance());
