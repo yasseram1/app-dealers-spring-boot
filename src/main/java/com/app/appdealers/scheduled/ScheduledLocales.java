@@ -24,6 +24,7 @@ public class ScheduledLocales {
     private GrupoRepository grupoRepository;
 
     @Scheduled(cron = "0 0 0 * * ?") // Se ejecuta a media noche
+    // @Scheduled(fixedRate = 30000)
     public void crearGruposDeLocales() {
 
         // Esta funcion lo que debe hacer es
