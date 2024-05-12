@@ -11,6 +11,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.app.appdealers.configuration.filter.JwtAuthenticationFilter;
+
 @Configuration
 @EnableWebSecurity
 public class HttpSecurityConfig {
@@ -18,15 +20,19 @@ public class HttpSecurityConfig {
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
+    @Autowired
+    private JwtAuthenticationFilter authenticacionFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(crsfConfig -> crsfConfig.disable())
             .sessionManagement(sessionMagConfig -> sessionMagConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider)
-            .addFilterBefore(null, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(authenticacionFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(authConfig -> {
-                authConfig.requestMatchers(HttpMethod.GET, "/auth/login").permitAll();
+                authConfig.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+                authConfig.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
 
                 authConfig.anyRequest().denyAll();
             });
