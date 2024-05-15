@@ -4,8 +4,10 @@ import org.springframework.http.ResponseEntity;
 
 import com.app.appdealers.util.response.GrupoComerciosReponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface IGrupoComerciosService {
 
-    ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios();
+    ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request);
     
 }

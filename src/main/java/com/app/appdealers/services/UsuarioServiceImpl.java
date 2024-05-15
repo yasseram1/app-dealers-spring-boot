@@ -1,6 +1,7 @@
 package com.app.appdealers.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         try {
 
             Rol rol = rolRepository.findById(1).get(); // Dealer
+            
+            if(usuarioRepository.existsByEmail(registerRequest.getEmail())) {
+                RegisterResponse responseErrors = new RegisterResponse("Error al crear usuario", List.of("El email ya está en uso"));
+                return new ResponseEntity<RegisterResponse>(responseErrors, HttpStatus.BAD_REQUEST);
+            }
 
             Usuario nuevoUsuario = Usuario
                     .builder()
@@ -60,14 +66,11 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuarioRepository.save(nuevoUsuario);
 
             RegisterResponse responseSuccess = new RegisterResponse("Usuario creado", null);
-
             return new ResponseEntity<RegisterResponse>(responseSuccess, HttpStatus.CREATED);
         } catch (Exception e) {
-            RegisterResponse responseErrors = new RegisterResponse("Error al crear el usuario", null);
-            return new ResponseEntity<RegisterResponse>(responseErrors, HttpStatus.CREATED);
+            RegisterResponse responseErrors = new RegisterResponse("Error al crear el usuario", List.of("Error del servidor"));
+            return new ResponseEntity<RegisterResponse>(responseErrors, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        
     }
 
     @Override
@@ -82,12 +85,12 @@ public class UsuarioServiceImpl implements UsuarioService {
             authenticationManager.authenticate(authToken);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<AuthResponse>(new AuthResponse(null, "Las credenciales no son válidas", true),HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<AuthResponse>(new AuthResponse(null, "Correo y/o contraseña incorrecta.", true),HttpStatus.UNAUTHORIZED);
         }
 
         Usuario usuario = usuarioRepository.findByEmail(authRequest.getEmail()).get();
         String jwt = jwtService.generateToken(usuario, generateExtraClaims(usuario));
-        return new ResponseEntity<AuthResponse>(new AuthResponse(jwt, "Token Jwt ", true), HttpStatus.OK);
+        return new ResponseEntity<AuthResponse>(new AuthResponse(jwt, "Token JWT recibido", false), HttpStatus.OK);
     }
 
     private Map<String, Object> generateExtraClaims(Usuario usuario) {

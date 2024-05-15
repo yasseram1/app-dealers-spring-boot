@@ -34,6 +34,7 @@ public class JwtService {
         return Jwts
                 .builder()
                 .subject(usuario.getUsername())
+                .id(String.valueOf(usuario.getId()))
                 .claims(stringObjectMap)
                 .issuedAt(issuedAt)
                 .expiration(expiration)

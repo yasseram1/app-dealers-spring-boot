@@ -11,12 +11,14 @@ import com.app.appdealers.services.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthController {
 
     @Autowired
@@ -29,7 +31,7 @@ public class AuthController {
     
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> getMethodName(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequest) {
         return usuarioService.registrarUsuario(registerRequest, null);
     }
     
