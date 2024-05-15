@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.appdealers.services.IGrupoComerciosService;
 import com.app.appdealers.util.response.GrupoComerciosReponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +23,8 @@ public class DealersController {
     private IGrupoComerciosService grupoComerciosService;
 
     @GetMapping("/obtenerGrupoComercios")
-    public ResponseEntity<GrupoComerciosReponse> getMethodName() {
-        return grupoComerciosService.obtenerGrupoComercios();
+    public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
+        return grupoComerciosService.obtenerGrupoComercios(request);
     }
     
 

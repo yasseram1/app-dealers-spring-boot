@@ -14,7 +14,11 @@ import com.app.appdealers.entity.Local;
 import com.app.appdealers.entity.Usuario;
 import com.app.appdealers.repository.GrupoRepository;
 import com.app.appdealers.repository.UsuarioRepository;
+import com.app.appdealers.services.jwt.JwtService;
 import com.app.appdealers.util.response.GrupoComerciosReponse;
+
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
@@ -25,11 +29,11 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
     @Autowired
     private GrupoRepository grupoRepository;
 
-    @Override
-    public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios() {
+    @Autowired
+    private JwtService jwtService;
 
-        // Falta agregar asignacion de grupo a un usuario en especifico
-        
+    @Override
+    public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
         Grupo grupo = grupoRepository.obtenerGrupoSinDealer();
         
         if(grupo != null) {
@@ -59,9 +63,10 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
 
                 listaCoordenadas.add(infoLocal);
             }
-
-            Usuario usuario = usuarioRepository.findById(1).get(); // provisional
-            grupo.setUsuario(usuario); // Se debe colocar al usuario que haga la consulta
+            
+            String jwt = request.getHeader("Authorization").split(" ")[1];
+            Usuario usuario = usuarioRepository.findById(Integer.parseInt(jwtService.getClaim(jwt, Claims::getId))).get();
+            grupo.setUsuario(usuario);
 
             grupoRepository.save(grupo);
 
