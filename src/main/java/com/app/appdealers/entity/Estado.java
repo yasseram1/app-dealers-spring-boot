@@ -1,14 +1,9 @@
 package com.app.appdealers.entity;
 
+import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,8 +19,16 @@ public class Estado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_crereg")
+    private Date fechaCreacion;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_actreg")
+    private Date fechaActualizacion;
 
     @OneToMany(mappedBy = "estado")
     private List<EstadoVisita> estadoVisita;

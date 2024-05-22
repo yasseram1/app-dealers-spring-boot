@@ -1,15 +1,9 @@
 package com.app.appdealers.entity;
 
+import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,10 +21,18 @@ public class Grupo {
 
     private String descripcion;
 
-    @OneToMany(mappedBy = "grupo")
-    private List<Local> locales;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_crereg")
+    private Date fechaCreacion;
 
-    public Grupo(String descripcion, List<Local> locales) {
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_actreg")
+    private Date fechaActualizacion;
+
+    @OneToMany(mappedBy = "grupo")
+    private List<Comercio> locales;
+
+    public Grupo(String descripcion, List<Comercio> locales) {
         this.descripcion = descripcion;
         this. locales = locales;
     }

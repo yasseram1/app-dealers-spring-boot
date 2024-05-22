@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.app.appdealers.entity.Grupo;
-import com.app.appdealers.entity.Local;
+import com.app.appdealers.entity.Comercio;
 import com.app.appdealers.repository.GrupoRepository;
 import com.app.appdealers.repository.LocalRepository;
 
@@ -32,38 +32,38 @@ public class ScheduledLocales {
         // 2. Utilizar un algoritmo para agrupar estos locales en grupos de 5 estos grupos estaran formados por los comercios mas cercanos entre si
         // 3. Guardar los locales, ahora ya con un grupo, en la base de datos nuevamente
         int localesXGrupo = 5;
-        List<Local> localWithoutGroup = localRepository.getAllLocalWithoutGroup();
+        List<Comercio> comercioWithoutGroup = localRepository.getAllLocalWithoutGroup();
         
-        if(localWithoutGroup.size() < localesXGrupo) {
+        if(comercioWithoutGroup.size() < localesXGrupo) {
             System.out.println("No hay suficientes locales para hacer la agrupación");
             return;
         }
         // Creamos un Cluster de K-Means
-        int numeroGrupos = localWithoutGroup.size() / localesXGrupo; //[5] Cambiarlo cuando se tengan mas comercios
+        int numeroGrupos = comercioWithoutGroup.size() / localesXGrupo; //[5] Cambiarlo cuando se tengan mas comercios
         // int numeroGrupos = localWithoutGroup.size() / 10;
 
-        KMeansPlusPlusClusterer<Local> clusterer = new KMeansPlusPlusClusterer<>(numeroGrupos, -1, new EuclideanDistance());
+        KMeansPlusPlusClusterer<Comercio> clusterer = new KMeansPlusPlusClusterer<>(numeroGrupos, -1, new EuclideanDistance());
 
-        List<CentroidCluster<Local>> clusters = clusterer.cluster(localWithoutGroup);
+        List<CentroidCluster<Comercio>> clusters = clusterer.cluster(comercioWithoutGroup);
         
         guardarGruposEnLaDB(clusters);
 
         System.out.println("Agrupación de locales completa");
     }
 
-    private void guardarGruposEnLaDB(List<CentroidCluster<Local>> clusters) {
+    private void guardarGruposEnLaDB(List<CentroidCluster<Comercio>> clusters) {
         for (int i = 0; i < clusters.size(); i++) {
-            List<Local> localesDelGrupo = clusters.get(i).getPoints();
+            List<Comercio> localesDelGrupo = clusters.get(i).getPoints();
             // Crear nuevo grupo
             Grupo nuevoGrupo = new Grupo("Grupo número " + (i + 1), localesDelGrupo);
 
             grupoRepository.save(nuevoGrupo);
 
-            for (Local local : localesDelGrupo) {
+            for (Comercio comercio : localesDelGrupo) {
                 // Guardar los locales en el nuevo grupo
-                local.setGrupo(nuevoGrupo);
-                localRepository.save(local);
-                System.out.println(local.getId() + " " + local.getNombre() + " - Grupo " + (i + 1));
+                comercio.setGrupo(nuevoGrupo);
+                localRepository.save(comercio);
+                System.out.println(comercio.getId() + " " + comercio.getRazonSocial() + " - Grupo " + (i + 1));
             }
         }
     }

@@ -2,15 +2,7 @@ package com.app.appdealers.entity;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,11 +19,19 @@ public class EstadoVisita {
     private Integer id;
 
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private Date fechaUltimaVisita;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_crereg")
+    private Date fechaCreacion;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_actreg")
+    private Date fechaActualizacion;
 
     @ManyToOne
     @JoinColumn(name = "fk_local")
-    private Local local;
+    private Comercio comercio;
 
     @ManyToOne
     @JoinColumn(name = "fk_estado")

@@ -1,13 +1,10 @@
 package com.app.appdealers.entity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +20,10 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String descripcion;
+    private String nom_rol;
+
+    @Temporal(TemporalType.DATE)
+    private LocalDateTime fec_crereg;
 
     @OneToMany(mappedBy = "rol")
     private List<Usuario> usuarios;

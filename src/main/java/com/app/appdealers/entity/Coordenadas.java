@@ -1,15 +1,11 @@
 package com.app.appdealers.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "coordenadas")
@@ -22,12 +18,22 @@ public class Coordenadas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "lat")
     private Double latitud;
 
+    @Column(name = "long")
     private Double longitud;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_crereg")
+    private Date fechaCreacion;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_actreg")
+    private Date fechaActualizacion;
 
     @OneToOne
     @JoinColumn(name = "fk_local")
-    private Local local;
+    private Comercio comercio;
 
 }

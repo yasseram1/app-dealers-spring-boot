@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.appdealers.dto.InfoLocalDto;
 import com.app.appdealers.entity.Grupo;
-import com.app.appdealers.entity.Local;
+import com.app.appdealers.entity.Comercio;
 import com.app.appdealers.entity.Usuario;
 import com.app.appdealers.repository.GrupoRepository;
 import com.app.appdealers.repository.UsuarioRepository;
@@ -44,20 +44,20 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
             gcr.setIdGrupo(grupo.getId());
             gcr.setDescripcionGrupo(grupo.getDescripcion());
 
-            List<Local> locales = grupo.getLocales();
+            List<Comercio> locales = grupo.getLocales();
             
             List<InfoLocalDto> listaCoordenadas = new ArrayList<>();
 
             for(int i=0; i<locales.size(); i++) {
                 
-                Local local = locales.get(i);
+                Comercio comercio = locales.get(i);
                 InfoLocalDto infoLocal = new InfoLocalDto();
 
-                infoLocal.setIdLocal(local.getId());
-                infoLocal.setNombreLocal(local.getNombre());
-                infoLocal.setDireccionLocal(local.getDireccion());
-                infoLocal.setTelefonoLocal(local.getTelefono());
-                infoLocal.setIdCoordenada(local.getCoordenadas().getId());
+                infoLocal.setIdLocal(comercio.getId());
+                infoLocal.setNombreLocal(comercio.getRazonSocial());
+                infoLocal.setDireccionLocal(comercio.getDireccion());
+                infoLocal.setTelefonoLocal(comercio.getTelefono());
+                infoLocal.setIdCoordenada(comercio.getCoordenadas().getId());
                 infoLocal.setLatitud(locales.get(i).getCoordenadas().getLatitud());
                 infoLocal.setLongitud(locales.get(i).getCoordenadas().getLongitud());
 

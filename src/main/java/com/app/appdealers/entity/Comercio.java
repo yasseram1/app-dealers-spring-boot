@@ -1,21 +1,13 @@
 package com.app.appdealers.entity;
 
+import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.apache.commons.math3.ml.clustering.Clusterable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,17 +17,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Local implements Clusterable {
+public class Comercio implements Clusterable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String nombre;
+    @Column(name = "razon_social")
+    private String razonSocial;
 
+    @Column(name = "ruc")
+    private String ruc;
+
+    @Column(name = "telefono")
+    private String telefono;
+
+    @Column(name = "direccion")
     private String direccion;
 
-    private String telefono;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_crereg")
+    private Date fechaCreacion;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fec_actreg")
+    private Date fechaActualizacion;
 
     @OneToOne(mappedBy = "local")
     private Coordenadas coordenadas;
