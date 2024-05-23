@@ -1,7 +1,8 @@
 package com.app.appdealers.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.app.appdealers.dto.RegistroVisitaDto;
+import com.app.appdealers.services.VisitaService;
+import org.springframework.web.bind.annotation.*;
 
 import com.app.appdealers.services.IGrupoComerciosService;
 import com.app.appdealers.util.response.GrupoComerciosReponse;
@@ -10,8 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
@@ -22,9 +21,17 @@ public class DealersController {
     @Autowired
     private IGrupoComerciosService grupoComerciosService;
 
+    @Autowired
+    private VisitaService visitaService;
+
     @GetMapping("/obtenerGrupoComercios")
     public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
         return grupoComerciosService.obtenerGrupoComercios(request);
+    }
+
+    @PostMapping("/registrarVisita")
+    public ResponseEntity<?> registrarVisita(HttpServletRequest request, @RequestBody RegistroVisitaDto registroVisitaDto) {
+        return visitaService.registrarVisita(request, registroVisitaDto);
     }
     
 

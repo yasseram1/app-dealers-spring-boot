@@ -25,7 +25,7 @@ public class Usuario implements UserDetails  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_rol;
+    private Integer id;
 
     @Column(name = "email")
     private String email;
@@ -64,13 +64,16 @@ public class Usuario implements UserDetails  {
     private Rol rol;
 
     @OneToMany(mappedBy = "usuario")
+    private List<Visita> visita;
+
+    @OneToMany(mappedBy = "usuario")
     private List<Grupo> grupo;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + rol.getNom_rol()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + rol.getNombre()));
 
         return authorities;
     }

@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "rol")
+@Table(name = "roles")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,10 +20,11 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String nom_rol;
+    @Column(name = "nom_rol")
+    private String nombre;
 
     @Temporal(TemporalType.DATE)
-    private LocalDateTime fec_crereg;
+    private Date fec_crereg;
 
     @OneToMany(mappedBy = "rol")
     private List<Usuario> usuarios;

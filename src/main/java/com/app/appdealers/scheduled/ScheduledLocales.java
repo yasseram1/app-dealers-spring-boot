@@ -32,7 +32,7 @@ public class ScheduledLocales {
         // 2. Utilizar un algoritmo para agrupar estos locales en grupos de 5 estos grupos estaran formados por los comercios mas cercanos entre si
         // 3. Guardar los locales, ahora ya con un grupo, en la base de datos nuevamente
         int localesXGrupo = 5;
-        List<Comercio> comercioWithoutGroup = localRepository.getAllLocalWithoutGroup();
+        List<Comercio> comercioWithoutGroup = localRepository.getAllComerciosWithoutGroup();
         
         if(comercioWithoutGroup.size() < localesXGrupo) {
             System.out.println("No hay suficientes locales para hacer la agrupación");

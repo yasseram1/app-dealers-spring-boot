@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "locales")
+@Table(name = "comercios")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -43,12 +43,12 @@ public class Comercio implements Clusterable {
     @Column(name = "fec_actreg")
     private Date fechaActualizacion;
 
-    @OneToOne(mappedBy = "local")
+    @OneToOne(mappedBy = "comercio")
     private Coordenadas coordenadas;
 
-    @OneToMany(mappedBy = "local", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "comercio", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<EstadoVisita> estadoVisita;
+    private List<Visita> visita;
 
     @ManyToOne
     @JoinColumn(name = "fk_grupo")

@@ -3,6 +3,7 @@ package com.app.appdealers.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.appdealers.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
             List<InfoLocalDto> listaCoordenadas = new ArrayList<>();
 
             for(int i=0; i<locales.size(); i++) {
-                
+
                 Comercio comercio = locales.get(i);
                 InfoLocalDto infoLocal = new InfoLocalDto();
 
@@ -63,9 +64,8 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
 
                 listaCoordenadas.add(infoLocal);
             }
-            
-            String jwt = request.getHeader("Authorization").split(" ")[1];
-            Usuario usuario = usuarioRepository.findById(Integer.parseInt(jwtService.getClaim(jwt, Claims::getId))).get();
+
+            Usuario usuario = UserUtil.getUsuarioFromRequest(request);
             grupo.setUsuario(usuario);
 
             grupoRepository.save(grupo);
@@ -82,7 +82,6 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
 
         return new ResponseEntity<>(grcError, HttpStatus.BAD_REQUEST);
     }
-    
 
 
 }
