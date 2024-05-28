@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 public class UserUtil {
 
     @Autowired
-    private static UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private static JwtService jwtService;
+    private JwtService jwtService;
 
-    public static Usuario getUsuarioFromRequest(HttpServletRequest request) {
+    public Usuario getUsuarioFromRequest(HttpServletRequest request) {
         String jwt = request.getHeader("Authorization").split(" ")[1];
         return usuarioRepository.findById(Integer.parseInt(jwtService.getClaim(jwt, Claims::getId))).orElseThrow();
     }

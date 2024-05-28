@@ -26,7 +26,7 @@ public class ScheduledLocales {
     private GrupoRepository grupoRepository;
 
     @Scheduled(cron = "0 0 0 * * ?") // Se ejecuta a media noche
-    // @Scheduled(fixedRate = 30000)
+    //    @Scheduled(fixedRate = 60000)
     public void crearGruposDeLocales() {
 
         // Esta funcion lo que debe hacer es
@@ -39,8 +39,11 @@ public class ScheduledLocales {
         calendar.add(Calendar.MONTH, -1);
         Date oneMonthAgo = calendar.getTime();
 
-        List<Comercio> comercioWithoutGroup = comercioRepository.getAllComerciosWithoutGroup(oneMonthAgo);
-        
+        eliminarGruposAsignadosALosComercios(comercioRepository.findAll());
+        grupoRepository.deleteAllGrupos();
+
+        List<Comercio> comercioWithoutGroup = comercioRepository.findComerciosWithoutRecentVisita(oneMonthAgo);
+
         if(comercioWithoutGroup.size() < localesXGrupo) {
             System.out.println("No hay suficientes locales para hacer la agrupación");
             return;
@@ -52,10 +55,17 @@ public class ScheduledLocales {
         KMeansPlusPlusClusterer<Comercio> clusterer = new KMeansPlusPlusClusterer<>(numeroGrupos, -1, new EuclideanDistance());
 
         List<CentroidCluster<Comercio>> clusters = clusterer.cluster(comercioWithoutGroup);
-        
+
         guardarGruposEnLaDB(clusters);
 
         System.out.println("Agrupación de locales completa");
+    }
+
+    private void eliminarGruposAsignadosALosComercios(List<Comercio> listaComercios) {
+        for(Comercio c : listaComercios) {
+            c.setGrupo(null);
+            comercioRepository.save(c);
+        }
     }
 
     private void guardarGruposEnLaDB(List<CentroidCluster<Comercio>> clusters) {

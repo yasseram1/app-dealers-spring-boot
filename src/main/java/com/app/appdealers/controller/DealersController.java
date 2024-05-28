@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/v0/dealers")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class DealersController {
 
     @Autowired
@@ -30,8 +30,9 @@ public class DealersController {
     }
 
     @PostMapping("/registrarVisita")
-    public ResponseEntity<?> registrarVisita(HttpServletRequest request, @RequestBody RegistroVisitaDto registroVisitaDto) {
-        return visitaService.registrarVisita(request, registroVisitaDto);
+    public ResponseEntity<?> registrarVisita(HttpServletRequest request, @RequestBody RegistroVisitaDto registroVisitaDto, @RequestParam Integer idComercio) {
+        System.out.println("ALSDJFLKAKLSDFA");
+        return visitaService.registrarVisita(request, registroVisitaDto, idComercio);
     }
     
 

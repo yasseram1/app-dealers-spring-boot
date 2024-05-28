@@ -13,5 +13,5 @@ import com.app.appdealers.entity.Comercio;
 public interface ComercioRepository extends JpaRepository<Comercio, Integer>  {
 
     @Query("SELECT c FROM Comercio c LEFT JOIN c.visita v WHERE v.id IS NULL OR v.fechaVisita < :oneMonthAgo")
-    public List<Comercio> getAllComerciosWithoutGroup(Date oneMonthAgo);
+    public List<Comercio> findComerciosWithoutRecentVisita(Date oneMonthAgo);
 }

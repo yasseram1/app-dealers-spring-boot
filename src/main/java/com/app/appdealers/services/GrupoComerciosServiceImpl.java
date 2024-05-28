@@ -33,6 +33,9 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private UserUtil userUtil;
+
     @Override
     public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
         Grupo grupo = grupoRepository.obtenerGrupoSinDealer();
@@ -65,7 +68,7 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
                 listaCoordenadas.add(infoLocal);
             }
 
-            Usuario usuario = UserUtil.getUsuarioFromRequest(request);
+            Usuario usuario = userUtil.getUsuarioFromRequest(request);
             grupo.setUsuario(usuario);
 
             grupoRepository.save(grupo);
