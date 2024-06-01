@@ -12,7 +12,6 @@ D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\schedule
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\AuthResponse.java
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Usuario.java
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\configuration\HttpSecurityConfig.java
-D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\LocalRepository.java
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\InfoLocalDto.java
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\RegisterRequest.java
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\configuration\SecurityBeansInjector.java
@@ -34,3 +33,4 @@ D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Comercio.java
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\RolRepository.java
 D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\VisitaRepository.java
+D:\proyectoIS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\ComercioRepository.java
