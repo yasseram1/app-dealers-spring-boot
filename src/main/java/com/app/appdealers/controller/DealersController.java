@@ -31,7 +31,6 @@ public class DealersController {
 
     @PostMapping("/registrarVisita")
     public ResponseEntity<?> registrarVisita(HttpServletRequest request, @RequestBody RegistroVisitaDto registroVisitaDto, @RequestParam Integer idComercio) {
-        System.out.println("ALSDJFLKAKLSDFA");
         return visitaService.registrarVisita(request, registroVisitaDto, idComercio);
     }
     

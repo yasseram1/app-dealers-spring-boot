@@ -42,58 +42,58 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
 
     @Override
     public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
-
-        // Comprobar si el dealer ya tiene un grupo asignado
-
-        Grupo grupo = grupoRepository.obtenerGrupoSinDealer();
-
-        if(grupo != null) {
-            GrupoComerciosReponse gcr = new GrupoComerciosReponse();
-            gcr.setCodigo(1);
-            gcr.setMensaje("Lista de comercios del grupo con id: " + grupo.getId());
-            
-            gcr.setIdGrupo(grupo.getId());
-            gcr.setDescripcionGrupo(grupo.getDescripcion());
-
-            List<Comercio> locales = grupo.getLocales();
-            
-            List<InfoLocalDto> listaCoordenadas = new ArrayList<>();
-
-            for(int i=0; i<locales.size(); i++) {
-
-                Comercio comercio = locales.get(i);
-                InfoLocalDto infoLocal = new InfoLocalDto();
-
-                infoLocal.setIdLocal(comercio.getId());
-                infoLocal.setNombreLocal(comercio.getRazonSocial());
-                infoLocal.setDireccionLocal(comercio.getDireccion());
-                infoLocal.setTelefonoLocal(comercio.getTelefono());
-                infoLocal.setIdCoordenada(comercio.getCoordenadas().getId());
-                infoLocal.setLatitud(locales.get(i).getCoordenadas().getLatitud());
-                infoLocal.setLongitud(locales.get(i).getCoordenadas().getLongitud());
-
-                listaCoordenadas.add(infoLocal);
-            }
-
-            grupo.setFase(faseRepository.findById(2).orElseThrow(null)); // TOMADO
-
-            Usuario usuario = userUtil.getUsuarioFromRequest(request);
-            grupo.setUsuario(usuario);
-
-
-            grupoRepository.save(grupo);
-
-            gcr.setCoordenadasListaComercios(listaCoordenadas);
-
-            return new ResponseEntity<>(gcr, HttpStatus.OK);
-
+        Usuario usuario = userUtil.getUsuarioFromRequest(request);
+        Grupo grupoAsignado = grupoRepository.findGroupByUserIdAndPhaseId(usuario.getId(), 2);
+        if(grupoAsignado != null) {
+            GrupoComerciosReponse grupoComerciosReponse = getGrupoComerciosResponse(grupoAsignado);
+            return new ResponseEntity<>(grupoComerciosReponse, HttpStatus.OK);
         }
 
-        GrupoComerciosReponse grcError = new GrupoComerciosReponse();
-        grcError.setCodigo(2);
-        grcError.setMensaje("No se encontro un grupo");
+        Grupo grupo = grupoRepository.obtenerGrupoSinDealer();
+        if(grupo != null) {
+            GrupoComerciosReponse grupoComerciosReponse = getGrupoComerciosResponse(grupo);
+            grupo.setFase(faseRepository.findById(2).orElseThrow(null));
+            grupo.setUsuario(usuario);
+            grupoRepository.save(grupo);
+            return new ResponseEntity<>(grupoComerciosReponse, HttpStatus.OK);
+        }
 
-        return new ResponseEntity<>(grcError, HttpStatus.BAD_REQUEST);
+        GrupoComerciosReponse grupoComerciosReponseError = new GrupoComerciosReponse();
+        grupoComerciosReponseError.setCodigo(2);
+        grupoComerciosReponseError.setMensaje("No se encontro un grupo");
+
+        return new ResponseEntity<>(grupoComerciosReponseError, HttpStatus.BAD_REQUEST);
+    }
+
+    private GrupoComerciosReponse getGrupoComerciosResponse(Grupo grupo) {
+        GrupoComerciosReponse gcr = new GrupoComerciosReponse();
+        gcr.setCodigo(1);
+        gcr.setMensaje("Lista de comercios del grupo con id: " + grupo.getId());
+        gcr.setIdGrupo(grupo.getId());
+        gcr.setDescripcionGrupo(grupo.getDescripcion());
+        gcr.setCoordenadasListaComercios(getInfoLocalDtos(grupo));
+        return gcr;
+    }
+
+    private static List<InfoLocalDto> getInfoLocalDtos(Grupo grupo) {
+        List<Comercio> locales = grupo.getLocales();
+        List<InfoLocalDto> listCoordinates = new ArrayList<>();
+
+        for (Comercio comercio : locales) {
+            InfoLocalDto infoLocal = new InfoLocalDto();
+
+            infoLocal.setIdLocal(comercio.getId());
+            infoLocal.setNombreLocal(comercio.getRazonSocial());
+            infoLocal.setDireccionLocal(comercio.getDireccion());
+            infoLocal.setTelefonoLocal(comercio.getTelefono());
+            infoLocal.setIdCoordenada(comercio.getCoordenadas().getId());
+            infoLocal.setLatitud(comercio.getCoordenadas().getLatitud());
+            infoLocal.setLongitud(comercio.getCoordenadas().getLongitud());
+
+            listCoordinates.add(infoLocal);
+        }
+
+        return listCoordinates;
     }
 
 

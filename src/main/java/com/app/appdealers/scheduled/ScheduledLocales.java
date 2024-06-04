@@ -29,8 +29,8 @@ public class ScheduledLocales {
     @Autowired
     private FaseRepository faseRepository;
 
-//    @Scheduled(cron = "0 0 0 * * ?") // Se ejecuta a media noche
-        @Scheduled(fixedRate = 30000)
+    @Scheduled(cron = "0 0 0 * * ?") // Se ejecuta a media noche
+//        @Scheduled(fixedRate = 30000)
     public void crearGruposDeLocales() {
 
         // Esta funcion lo que debe hacer es
