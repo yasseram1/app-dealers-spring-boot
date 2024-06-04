@@ -51,4 +51,8 @@ public class Visita {
     @JoinColumn(name = "fk_local")
     private Comercio comercio;
 
+    @ManyToOne
+    @JoinColumn(name = "id_grupo")
+    private Grupo grupo;
+
 }

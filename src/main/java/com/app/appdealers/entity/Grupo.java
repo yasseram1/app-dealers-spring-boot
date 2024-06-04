@@ -32,6 +32,13 @@ public class Grupo {
     @OneToMany(mappedBy = "grupo")
     private List<Comercio> locales;
 
+    @ManyToOne
+    @JoinColumn(name = "id_fase")
+    private Fase fase;
+
+    @OneToMany(mappedBy = "grupo")
+    private List<Visita> visitas;
+
     public Grupo(String descripcion, List<Comercio> locales) {
         this.descripcion = descripcion;
         this. locales = locales;

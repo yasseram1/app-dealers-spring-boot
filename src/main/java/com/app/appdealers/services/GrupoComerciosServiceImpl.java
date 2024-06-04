@@ -3,6 +3,7 @@ package com.app.appdealers.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.appdealers.repository.FaseRepository;
 import com.app.appdealers.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,10 +37,16 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
     @Autowired
     private UserUtil userUtil;
 
+    @Autowired
+    private FaseRepository faseRepository;
+
     @Override
     public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
+
+        // Comprobar si el dealer ya tiene un grupo asignado
+
         Grupo grupo = grupoRepository.obtenerGrupoSinDealer();
-        
+
         if(grupo != null) {
             GrupoComerciosReponse gcr = new GrupoComerciosReponse();
             gcr.setCodigo(1);
@@ -68,8 +75,11 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
                 listaCoordenadas.add(infoLocal);
             }
 
+            grupo.setFase(faseRepository.findById(2).orElseThrow(null)); // TOMADO
+
             Usuario usuario = userUtil.getUsuarioFromRequest(request);
             grupo.setUsuario(usuario);
+
 
             grupoRepository.save(grupo);
 

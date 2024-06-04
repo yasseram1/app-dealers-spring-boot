@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.app.appdealers.repository.FaseRepository;
 import org.apache.commons.math3.ml.clustering.CentroidCluster;
 import org.apache.commons.math3.ml.clustering.KMeansPlusPlusClusterer;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
@@ -25,8 +26,11 @@ public class ScheduledLocales {
     @Autowired
     private GrupoRepository grupoRepository;
 
-    @Scheduled(cron = "0 0 0 * * ?") // Se ejecuta a media noche
-    //    @Scheduled(fixedRate = 60000)
+    @Autowired
+    private FaseRepository faseRepository;
+
+//    @Scheduled(cron = "0 0 0 * * ?") // Se ejecuta a media noche
+        @Scheduled(fixedRate = 30000)
     public void crearGruposDeLocales() {
 
         // Esta funcion lo que debe hacer es
@@ -39,8 +43,9 @@ public class ScheduledLocales {
         calendar.add(Calendar.MONTH, -1);
         Date oneMonthAgo = calendar.getTime();
 
-        eliminarGruposAsignadosALosComercios(comercioRepository.findAll());
-        grupoRepository.deleteAllGrupos();
+        // eliminarGruposAsignadosALosComercios(comercioRepository.findAll());
+        comercioRepository.setGrupoNullWhereFaseIsOneOrThree();
+        grupoRepository.deleteAllGroupsiWithIdFaseOne();
 
         List<Comercio> comercioWithoutGroup = comercioRepository.findComerciosWithoutRecentVisita(oneMonthAgo);
 
@@ -61,26 +66,28 @@ public class ScheduledLocales {
         System.out.println("Agrupación de locales completa");
     }
 
-    private void eliminarGruposAsignadosALosComercios(List<Comercio> listaComercios) {
-        for(Comercio c : listaComercios) {
-            c.setGrupo(null);
-            comercioRepository.save(c);
+    private void eliminarGruposAsignadosALosComercios(List<Comercio> comercios) {
+        for (Comercio listaComercio : comercios) {
+            listaComercio.setGrupo(null);
         }
+        comercioRepository.saveAll(comercios);
     }
 
     private void guardarGruposEnLaDB(List<CentroidCluster<Comercio>> clusters) {
         for (int i = 0; i < clusters.size(); i++) {
             List<Comercio> localesDelGrupo = clusters.get(i).getPoints();
-            // Crear nuevo grupo
-            Grupo nuevoGrupo = new Grupo("Grupo número " + (i + 1), localesDelGrupo);
+            // Create new group
+            Grupo nuevoGrupo = new Grupo("Group number " + (i + 1), localesDelGrupo);
+            nuevoGrupo.setFase(faseRepository.findById(1).orElseThrow(null)); // Sin tomar
+            nuevoGrupo.setFechaCreacion(new Date());
 
             grupoRepository.save(nuevoGrupo);
 
             for (Comercio comercio : localesDelGrupo) {
-                // Guardar los locales en el nuevo grupo
+                // Save locals in new group
                 comercio.setGrupo(nuevoGrupo);
                 comercioRepository.save(comercio);
-                System.out.println(comercio.getId() + " " + comercio.getRazonSocial() + " - Grupo " + (i + 1));
+                System.out.println(comercio.getId() + " " + comercio.getRazonSocial() + " - Group " + (i + 1));
             }
         }
     }
