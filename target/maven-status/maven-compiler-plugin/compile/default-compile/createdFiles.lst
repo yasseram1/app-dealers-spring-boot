@@ -8,6 +8,7 @@ com\app\appdealers\util\enums\Estado.class
 com\app\appdealers\util\UserUtil.class
 com\app\appdealers\entity\Visita.class
 com\app\appdealers\dto\AuthRequest.class
+com\app\appdealers\util\enums\FaseEnum.class
 com\app\appdealers\dto\AuthResponse.class
 com\app\appdealers\dto\RegisterRequest.class
 com\app\appdealers\controller\DealersController.class
@@ -19,6 +20,7 @@ com\app\appdealers\dto\RegistroVisitaDto.class
 com\app\appdealers\controller\HealController.class
 com\app\appdealers\repository\GrupoRepository.class
 com\app\appdealers\AppDealersApplication.class
+com\app\appdealers\repository\FaseRepository.class
 com\app\appdealers\entity\Comercio.class
 com\app\appdealers\util\enums\Respuesta.class
 com\app\appdealers\dto\InfoLocalDto.class
@@ -26,6 +28,7 @@ com\app\appdealers\repository\ComercioRepository.class
 com\app\appdealers\entity\Coordenadas.class
 com\app\appdealers\repository\VisitaRepository.class
 com\app\appdealers\dto\RegisterResponse.class
+com\app\appdealers\entity\Fase.class
 com\app\appdealers\configuration\filter\JwtAuthenticationFilter.class
 com\app\appdealers\configuration\SecurityBeansInjector.class
 com\app\appdealers\services\UsuarioService.class

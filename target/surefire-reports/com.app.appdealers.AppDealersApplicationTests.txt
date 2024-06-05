@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.app.appdealers.AppDealersApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.48 s -- in com.app.appdealers.AppDealersApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.641 s -- in com.app.appdealers.AppDealersApplicationTests
