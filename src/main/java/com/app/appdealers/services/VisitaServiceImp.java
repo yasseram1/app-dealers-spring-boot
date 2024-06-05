@@ -5,6 +5,7 @@ import com.app.appdealers.entity.Comercio;
 import com.app.appdealers.entity.Usuario;
 import com.app.appdealers.entity.Visita;
 import com.app.appdealers.repository.ComercioRepository;
+import com.app.appdealers.repository.GrupoRepository;
 import com.app.appdealers.repository.UsuarioRepository;
 import com.app.appdealers.repository.VisitaRepository;
 import com.app.appdealers.util.UserUtil;
@@ -29,16 +30,16 @@ public class VisitaServiceImp implements VisitaService {
     @Autowired
     private UserUtil userUtil;
 
+    @Autowired
+    private GrupoRepository grupoRepository;
+
 
     @Override
     public ResponseEntity<?> registrarVisita(HttpServletRequest request, RegistroVisitaDto registroVisitaDto, Integer idComercio) {
         try {
-
             Usuario usuario = userUtil.getUsuarioFromRequest(request);
             Comercio comercio = comercioRepository.findById(idComercio).orElseThrow(() -> new NoSuchElementException("Comercio no encontrado"));
-
-            Visita vista = crearRegistroVisita(usuario, registroVisitaDto, comercio);
-
+            Visita vista = registrarVisita(usuario, registroVisitaDto, comercio);
             visitaRepository.save(vista);
 
             return ResponseEntity.ok().body("Información de visita registrada");
@@ -51,19 +52,32 @@ public class VisitaServiceImp implements VisitaService {
         }
     }
 
-    private Visita crearRegistroVisita(Usuario usuario, RegistroVisitaDto registroVisitaDto, Comercio comercio) {
-        Visita nuevoRegistroVisita = new Visita();
+    private Visita registrarVisita(Usuario usuario, RegistroVisitaDto registroVisitaDto, Comercio comercio) {
 
-        nuevoRegistroVisita.setUsuario(usuario);
-        nuevoRegistroVisita.setEstado(registroVisitaDto.getEstado());
-        nuevoRegistroVisita.setRespuesta(registroVisitaDto.getRespuesta());
-        nuevoRegistroVisita.setDetalleVisita(registroVisitaDto.getDetalleRespuesta());
-        Date now = new Date();
-        nuevoRegistroVisita.setFechaVisita(now);
-        nuevoRegistroVisita.setFechaCreacion(now);
-        nuevoRegistroVisita.setFechaActualizacion(null);
-        nuevoRegistroVisita.setComercio(comercio);
+        Visita visitExistence = visitaRepository.findVisitByCommerceIdAndGroupId(comercio.getId(), comercio.getGrupo().getId());
 
-        return nuevoRegistroVisita;
+        if(visitExistence != null) {
+            Visita visitUpdated = setVisitData(visitExistence, registroVisitaDto);
+            visitUpdated.setFechaActualizacion(new Date());
+            return visitUpdated;
+        }
+
+        Visita visita = setVisitData(new Visita(), registroVisitaDto);
+
+        visita.setFechaCreacion(new Date());
+        visita.setUsuario(usuario);
+        visita.setGrupo(comercio.getGrupo());
+        visita.setComercio(comercio);
+
+        return visita;
+    }
+
+    private Visita setVisitData(Visita visita, RegistroVisitaDto registroVisitaDto) {
+        visita.setEstado(registroVisitaDto.getEstado());
+        visita.setRespuesta(registroVisitaDto.getRespuesta());
+        visita.setDetalleVisita(registroVisitaDto.getDetalleRespuesta());
+        visita.setFechaVisita(new Date());
+
+        return visita;
     }
 }
