@@ -36,6 +36,7 @@ public class HttpSecurityConfig {
 
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerGrupoComercios").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.POST, "/api/v0/dealers/registrarVisita**").hasAuthority("ROLE_DEALER");
+                authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/cargarDataVisita**").hasAuthority("ROLE_DEALER");
 
                 authConfig.anyRequest().denyAll();
             });

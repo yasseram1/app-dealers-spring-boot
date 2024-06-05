@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface VisitaRepository extends JpaRepository<Visita, Integer> {
 
     @Query("SELECT v FROM Visita v WHERE v.comercio.id = :idComercio AND v.grupo.id = :idGrupo")
-    Visita findVisitByCommerceIdAndGroupId(@Param("idComercio") Integer idComercio, @Param("idGrupo") Integer idGrupo);
+    Optional<Visita> findVisitByCommerceIdAndGroupId(@Param("idComercio") Integer idComercio, @Param("idGrupo") Integer idGrupo);
 }

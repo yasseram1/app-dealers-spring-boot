@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class VisitaServiceImp implements VisitaService {
@@ -41,7 +42,6 @@ public class VisitaServiceImp implements VisitaService {
             Comercio comercio = comercioRepository.findById(idComercio).orElseThrow(() -> new NoSuchElementException("Comercio no encontrado"));
             Visita vista = registrarVisita(usuario, registroVisitaDto, comercio);
             visitaRepository.save(vista);
-
             return ResponseEntity.ok().body("Información de visita registrada");
         } catch (NoSuchElementException e) {
             System.out.println((e.getMessage()));
@@ -52,23 +52,37 @@ public class VisitaServiceImp implements VisitaService {
         }
     }
 
+    @Override
+    public ResponseEntity<?> cargarDataVisita(HttpServletRequest request, Integer idComercio, Integer idGrupo) {
+
+        Optional<Visita> visit = visitaRepository.findVisitByCommerceIdAndGroupId(idComercio, idGrupo);
+
+        RegistroVisitaDto registroVisitaDto  = new RegistroVisitaDto();
+
+        if(visit.isPresent() && visit.get().getUsuario() == userUtil.getUsuarioFromRequest(request)) {
+            Visita visitExistent = visit.get();
+            registroVisitaDto.setEstado(visitExistent.getEstado());
+            registroVisitaDto.setRespuesta(visitExistent.getRespuesta());
+            registroVisitaDto.setDetalleRespuesta(visitExistent.getDetalleVisita());
+        }
+
+        return ResponseEntity.ok().body(registroVisitaDto);
+    }
+
     private Visita registrarVisita(Usuario usuario, RegistroVisitaDto registroVisitaDto, Comercio comercio) {
+        Optional<Visita> visitExistence = visitaRepository.findVisitByCommerceIdAndGroupId(comercio.getId(), comercio.getGrupo().getId());
 
-        Visita visitExistence = visitaRepository.findVisitByCommerceIdAndGroupId(comercio.getId(), comercio.getGrupo().getId());
-
-        if(visitExistence != null) {
-            Visita visitUpdated = setVisitData(visitExistence, registroVisitaDto);
+        if(visitExistence.isPresent()) {
+            Visita visitUpdated = setVisitData(visitExistence.get(), registroVisitaDto);
             visitUpdated.setFechaActualizacion(new Date());
             return visitUpdated;
         }
 
         Visita visita = setVisitData(new Visita(), registroVisitaDto);
-
         visita.setFechaCreacion(new Date());
         visita.setUsuario(usuario);
         visita.setGrupo(comercio.getGrupo());
         visita.setComercio(comercio);
-
         return visita;
     }
 
@@ -77,7 +91,6 @@ public class VisitaServiceImp implements VisitaService {
         visita.setRespuesta(registroVisitaDto.getRespuesta());
         visita.setDetalleVisita(registroVisitaDto.getDetalleRespuesta());
         visita.setFechaVisita(new Date());
-
         return visita;
     }
 }

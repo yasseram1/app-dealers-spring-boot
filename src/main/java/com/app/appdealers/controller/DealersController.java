@@ -33,6 +33,10 @@ public class DealersController {
     public ResponseEntity<?> registrarVisita(HttpServletRequest request, @RequestBody RegistroVisitaDto registroVisitaDto, @RequestParam Integer idComercio) {
         return visitaService.registrarVisita(request, registroVisitaDto, idComercio);
     }
-    
+
+    @GetMapping("/cargarDataVisita")
+    public ResponseEntity<?> cargarDataVisita(HttpServletRequest request, @RequestParam Integer idComercio, @RequestParam Integer idGrupo) {
+        return visitaService.cargarDataVisita(request, idComercio, idGrupo);
+    }
 
 }
