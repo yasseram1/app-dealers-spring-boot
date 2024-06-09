@@ -1,6 +1,6 @@
 package com.app.appdealers.services;
 
-import com.app.appdealers.dto.CrearComercioDto;
+import com.app.appdealers.dto.ComercioDto;
 import com.app.appdealers.entity.Comercio;
 import com.app.appdealers.entity.Coordenadas;
 import com.app.appdealers.repository.ComercioRepository;
@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class ComercioServiceImpl implements ComercioService{
@@ -21,24 +22,13 @@ public class ComercioServiceImpl implements ComercioService{
     private CoordenadasRepository coordenadasRepository;
 
     @Override
-    public ResponseEntity<?> crearComercio(CrearComercioDto comercioDto) {
+    public ResponseEntity<?> crearComercio(ComercioDto comercioDto) {
         try {
-            Comercio comercio = new Comercio();
-
-            comercio.setRazonSocial(comercioDto.getRazonSocial());
-            comercio.setRuc(comercioDto.getRuc());
-            comercio.setTelefono(comercioDto.getTelefono());
-            comercio.setDireccion(comercioDto.getDireccion());
+            Comercio comercio = comercioDtoToComercio(comercioDto, new Comercio());
             comercio.setFechaCreacion(new Date());
-            comercioRepository.save(comercio);
+            Coordenadas coordenadas = comercioDtoToCoordenadas(comercioDto, comercio, new Coordenadas());
 
-            Coordenadas coordenadas = new Coordenadas();
-
-            coordenadas.setComercio(comercio);
             coordenadas.setFechaCreacion(new Date());
-            coordenadas.setLatitud(comercioDto.getLatitud());
-            coordenadas.setLongitud(comercioDto.getLongitud());
-
             comercio.setCoordenadas(coordenadas);
 
             coordenadasRepository.save(coordenadas);
@@ -48,6 +38,67 @@ public class ComercioServiceImpl implements ComercioService{
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    private Coordenadas comercioDtoToCoordenadas(ComercioDto comercioDto, Comercio comercio, Coordenadas coordenadas) {
+        coordenadas.setComercio(comercio);
+        coordenadas.setLatitud(comercioDto.getLatitud());
+        coordenadas.setLongitud(comercioDto.getLongitud());
+        return coordenadas;
+    }
+
+    @Override
+    public ResponseEntity<?> editarComercio(Integer idComercio, ComercioDto comercioDto) {
+        try {
+
+            Optional<Comercio> comercioOptional = comercioRepository.findById(idComercio);
+            Comercio comercio = comercioDtoToComercio(comercioDto, comercioOptional.get());
+            comercio.setFechaActualizacion(new Date());
+            Coordenadas coordenadas = comercioDtoToCoordenadas(comercioDto, comercio, comercio.getCoordenadas());
+            coordenadas.setFechaActualizacion(new Date());
+
+            coordenadasRepository.save(coordenadas);
+            comercioRepository.save(comercio);
+            return ResponseEntity.ok().body(comercio);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public ResponseEntity<?> obtenerDataComercio(Integer idComercio) {
+        try {
+            Optional<Comercio> comercioOptional = comercioRepository.findById(idComercio);
+
+            if(comercioOptional.isPresent()) {
+                Comercio comercio = comercioOptional.get();
+
+                ComercioDto comercioDto = new ComercioDto();
+
+                comercioDto.setRazonSocial(comercio.getRazonSocial());
+                comercioDto.setRuc(comercio.getRuc());
+                comercioDto.setDireccion(comercio.getDireccion());
+                comercioDto.setTelefono(comercio.getTelefono());
+                comercioDto.setLongitud(comercio.getCoordenadas().getLongitud());
+                comercioDto.setLatitud(comercio.getCoordenadas().getLatitud());
+
+                return ResponseEntity.ok().body(comercioDto);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    private Comercio comercioDtoToComercio(ComercioDto comercioDto, Comercio comercio) {
+        comercio.setRazonSocial(comercioDto.getRazonSocial());
+        comercio.setRuc(comercioDto.getRuc());
+        comercio.setTelefono(comercioDto.getTelefono());
+        comercio.setDireccion(comercioDto.getDireccion());
+
+        return comercioRepository.save(comercio);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.app.appdealers.controller;
 
-import com.app.appdealers.dto.CrearComercioDto;
+import com.app.appdealers.dto.ComercioDto;
 import com.app.appdealers.dto.RegistroVisitaDto;
 import com.app.appdealers.services.ComercioService;
 import com.app.appdealers.services.UsuarioService;
@@ -65,8 +65,18 @@ public class DealersController {
     }
 
     @PostMapping("/crearComercio")
-    public ResponseEntity<?> crearComercio(HttpServletRequest request, @RequestBody CrearComercioDto comercio) {
+    public ResponseEntity<?> crearComercio(HttpServletRequest request, @RequestBody ComercioDto comercio) {
         return comercioService.crearComercio(comercio);
+    }
+
+    @PutMapping("/editarComercio")
+    public ResponseEntity<?> editarComercio(HttpServletRequest request,@RequestParam Integer idComercio, @RequestBody ComercioDto comercioDto) {
+        return comercioService.editarComercio(idComercio, comercioDto);
+    }
+
+    @GetMapping("/obtenerDataComercio")
+    public ResponseEntity<?> obtenerDataComercio(HttpServletRequest request, @RequestParam Integer idComercio) {
+        return comercioService.obtenerDataComercio(idComercio);
     }
 
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CrearComercioDto {
+public class ComercioDto {
 
     private String razonSocial;
     private String ruc;
