@@ -65,18 +65,23 @@ public class DealersController {
     }
 
     @PostMapping("/crearComercio")
-    public ResponseEntity<?> crearComercio(HttpServletRequest request, @RequestBody ComercioDto comercio) {
+    public ResponseEntity<?> crearComercio(@RequestBody ComercioDto comercio) {
         return comercioService.crearComercio(comercio);
     }
 
     @PutMapping("/editarComercio")
-    public ResponseEntity<?> editarComercio(HttpServletRequest request,@RequestParam Integer idComercio, @RequestBody ComercioDto comercioDto) {
+    public ResponseEntity<?> editarComercio(@RequestParam Integer idComercio, @RequestBody ComercioDto comercioDto) {
         return comercioService.editarComercio(idComercio, comercioDto);
     }
 
     @GetMapping("/obtenerDataComercio")
-    public ResponseEntity<?> obtenerDataComercio(HttpServletRequest request, @RequestParam Integer idComercio) {
+    public ResponseEntity<?> obtenerDataComercio(@RequestParam Integer idComercio) {
         return comercioService.obtenerDataComercio(idComercio);
+    }
+
+    @DeleteMapping("/eliminarComercio")
+    public ResponseEntity<?> eliminarComercio(@RequestParam Integer idComercio) {
+        return comercioService.eliminarComercio(idComercio);
     }
 
 }

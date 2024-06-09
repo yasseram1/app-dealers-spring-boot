@@ -10,4 +10,6 @@ public interface ComercioService {
     ResponseEntity<?> editarComercio(Integer idComercio, ComercioDto comercioDto);
 
     ResponseEntity<?> obtenerDataComercio(Integer idComercio);
+
+    ResponseEntity<?> eliminarComercio(Integer idComercio);
 }

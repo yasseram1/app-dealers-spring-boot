@@ -5,6 +5,7 @@ import com.app.appdealers.entity.Comercio;
 import com.app.appdealers.entity.Coordenadas;
 import com.app.appdealers.repository.ComercioRepository;
 import com.app.appdealers.repository.CoordenadasRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,24 @@ public class ComercioServiceImpl implements ComercioService{
                 return ResponseEntity.ok().body(comercioDto);
             } else {
                 return ResponseEntity.badRequest().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @Transactional
+    @Override
+    public ResponseEntity<?> eliminarComercio(Integer idComercio) {
+        try {
+            Optional<Comercio> comercioOptional = comercioRepository.findById(idComercio);
+            if(comercioOptional.isPresent()) {
+                Coordenadas coordenadas = comercioOptional.get().getCoordenadas();
+                coordenadasRepository.deleteById(coordenadas.getId());
+                comercioRepository.deleteById(idComercio);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
