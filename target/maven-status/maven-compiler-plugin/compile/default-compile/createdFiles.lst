@@ -13,6 +13,7 @@ com\app\appdealers\dto\AuthResponse.class
 com\app\appdealers\dto\RegisterRequest.class
 com\app\appdealers\controller\DealersController.class
 com\app\appdealers\repository\UsuarioRepository.class
+com\app\appdealers\util\response\DealersData.class
 com\app\appdealers\scheduled\ScheduledLocales.class
 com\app\appdealers\services\GrupoComerciosServiceImpl.class
 com\app\appdealers\util\response\GrupoComerciosReponse$GrupoComerciosReponseBuilder.class
@@ -37,5 +38,6 @@ com\app\appdealers\entity\Rol.class
 com\app\appdealers\entity\Usuario.class
 com\app\appdealers\services\IGrupoComerciosService.class
 com\app\appdealers\services\VisitaServiceImp.class
+com\app\appdealers\util\response\MetricasDealer.class
 com\app\appdealers\entity\Usuario$UsuarioBuilder.class
 com\app\appdealers\services\jwt\JwtService.class

@@ -2,11 +2,13 @@ D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\Grupo
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Fase.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\ComercioRepository.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Rol.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\util\response\DealersData.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\configuration\HttpSecurityConfig.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\UsuarioServiceImp.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\RegisterResponse.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\FaseRepository.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\scheduled\ScheduledLocales.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\util\response\MetricasDealer.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\controller\AuthController.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\configuration\filter\JwtAuthenticationFilter.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Comercio.java
