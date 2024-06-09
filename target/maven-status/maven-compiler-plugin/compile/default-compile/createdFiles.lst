@@ -1,3 +1,4 @@
+com\app\appdealers\dto\HistorialVisitasReponse.class
 com\app\appdealers\repository\RolRepository.class
 com\app\appdealers\entity\Grupo.class
 com\app\appdealers\controller\AuthController.class

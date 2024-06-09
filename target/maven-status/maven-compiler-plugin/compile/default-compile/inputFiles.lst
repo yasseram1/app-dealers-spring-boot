@@ -20,6 +20,7 @@ D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\VisitaS
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Grupo.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\IGrupoComerciosService.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\configuration\SecurityBeansInjector.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\HistorialVisitasReponse.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Coordenadas.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\AuthRequest.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\AuthResponse.java
