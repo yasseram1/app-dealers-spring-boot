@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class DealersData {
-
+    private Integer id;
     private String nombre;
     private String email;
     private String numDoc;

@@ -103,7 +103,7 @@ public class UsuarioServiceImp implements UsuarioService {
             List<DealersData> dealersData = new ArrayList<DealersData>();
 
             for(Usuario user : users) {
-                DealersData dealerData = new DealersData(user.getNombres(), user.getEmail(), user.getDni(), user.getTelefono());
+                DealersData dealerData = new DealersData(user.getId(), user.getNombres(), user.getEmail(), user.getDni(), user.getTelefono());
                 dealersData.add(dealerData);
             }
 

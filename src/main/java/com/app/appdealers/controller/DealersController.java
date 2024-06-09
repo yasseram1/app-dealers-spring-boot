@@ -48,4 +48,9 @@ public class DealersController {
         return usuarioService.getAllDealers();
     }
 
+    @GetMapping("/obtenerMetricasDealer")
+    public ResponseEntity<?> obtenerMetricasDealer(HttpServletRequest request, @RequestParam Integer idUsuario) {
+        return visitaService.obtenerMetricasDealer(request, idUsuario);
+    }
+
 }

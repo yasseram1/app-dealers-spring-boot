@@ -9,6 +9,7 @@ import com.app.appdealers.repository.GrupoRepository;
 import com.app.appdealers.repository.UsuarioRepository;
 import com.app.appdealers.repository.VisitaRepository;
 import com.app.appdealers.util.UserUtil;
+import com.app.appdealers.util.response.MetricasDealer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,17 @@ public class VisitaServiceImp implements VisitaService {
         }
 
         return ResponseEntity.ok().body(registroVisitaDto);
+    }
+
+    @Override
+    public ResponseEntity<?> obtenerMetricasDealer(HttpServletRequest request, Integer idUsuario) {
+        MetricasDealer metricasDealer = new MetricasDealer();
+        metricasDealer.setPromedioVisitasPorDia(visitaRepository.obtenerPromedioComerciosVisitadosPorDia(idUsuario));
+        metricasDealer.setCantidadVisitasEstadoVisitado(visitaRepository.obtenerCantidadComerciosVisitados(idUsuario));
+        metricasDealer.setPromedioVisitasNuevosTratosPorDia(visitaRepository.obtenerPromedioComercioAfiliados(idUsuario));
+        metricasDealer.setCantidadVisitasNuevosTratos(visitaRepository.obtenerCantidadComerciosAfiliados(idUsuario));
+
+        return ResponseEntity.ok().body(metricasDealer);
     }
 
     private Visita registrarVisita(Usuario usuario, RegistroVisitaDto registroVisitaDto, Comercio comercio) {
