@@ -1,4 +1,5 @@
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\GrupoRepository.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\CrearComercioDto.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Fase.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\ComercioRepository.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Rol.java
@@ -12,7 +13,9 @@ D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\util\response\Me
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\controller\AuthController.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\configuration\filter\JwtAuthenticationFilter.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Comercio.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\CoordenadasRepository.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\RolRepository.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\ComercioService.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\UsuarioService.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\RegisterRequest.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\VisitaService.java
@@ -25,6 +28,7 @@ D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Coordenad
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\AuthRequest.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\AuthResponse.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\GrupoComerciosServiceImpl.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\ComercioServiceImpl.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\jwt\JwtService.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\util\enums\Respuesta.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\UsuarioRepository.java
