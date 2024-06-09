@@ -1,10 +1,10 @@
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\GrupoRepository.java
-D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\CrearComercioDto.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Fase.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\ComercioRepository.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\entity\Rol.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\util\response\DealersData.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\configuration\HttpSecurityConfig.java
+D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\ComercioDto.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\services\UsuarioServiceImp.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\dto\RegisterResponse.java
 D:\IS2\app-dealers-spring-boot\src\main\java\com\app\appdealers\repository\FaseRepository.java

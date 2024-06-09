@@ -1,5 +1,6 @@
 com\app\appdealers\repository\RolRepository.class
 com\app\appdealers\entity\Grupo.class
+com\app\appdealers\dto\ComercioDto.class
 com\app\appdealers\dto\RegisterRequest.class
 com\app\appdealers\repository\UsuarioRepository.class
 com\app\appdealers\scheduled\ScheduledLocales.class
@@ -32,7 +33,6 @@ com\app\appdealers\util\enums\FaseEnum.class
 com\app\appdealers\dto\AuthResponse.class
 com\app\appdealers\controller\DealersController.class
 com\app\appdealers\util\response\DealersData.class
-com\app\appdealers\dto\CrearComercioDto.class
 com\app\appdealers\services\GrupoComerciosServiceImpl.class
 com\app\appdealers\util\response\GrupoComerciosReponse$GrupoComerciosReponseBuilder.class
 com\app\appdealers\repository\FaseRepository.class
