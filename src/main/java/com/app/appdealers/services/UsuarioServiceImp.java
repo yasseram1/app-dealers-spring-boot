@@ -1,9 +1,11 @@
 package com.app.appdealers.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.app.appdealers.util.response.DealersData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,6 +93,24 @@ public class UsuarioServiceImp implements UsuarioService {
         Usuario usuario = usuarioRepository.findByEmail(authRequest.getEmail()).get();
         String jwt = jwtService.generateToken(usuario, generateExtraClaims(usuario));
         return new ResponseEntity<AuthResponse>(new AuthResponse(jwt, "Token JWT recibido", false), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> getAllDealers() {
+        try {
+            List<Usuario> users = usuarioRepository.getAllUsersWithRole(1); // rol id 1 is for dealers
+
+            List<DealersData> dealersData = new ArrayList<DealersData>();
+
+            for(Usuario user : users) {
+                DealersData dealerData = new DealersData(user.getNombres(), user.getEmail(), user.getDni(), user.getTelefono());
+                dealersData.add(dealerData);
+            }
+
+            return ResponseEntity.ok().body(dealersData);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     private Map<String, Object> generateExtraClaims(Usuario usuario) {

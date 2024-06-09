@@ -11,4 +11,5 @@ import com.app.appdealers.dto.RegisterResponse;
 public interface UsuarioService {
     ResponseEntity<RegisterResponse> registrarUsuario(RegisterRequest user, BindingResult br);
     ResponseEntity<AuthResponse> login(AuthRequest authRequest);
+    ResponseEntity<?> getAllDealers();
 }

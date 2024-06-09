@@ -1,6 +1,7 @@
 package com.app.appdealers.controller;
 
 import com.app.appdealers.dto.RegistroVisitaDto;
+import com.app.appdealers.services.UsuarioService;
 import com.app.appdealers.services.VisitaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,9 @@ public class DealersController {
     @Autowired
     private VisitaService visitaService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @GetMapping("/obtenerGrupoComercios")
     public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
         return grupoComerciosService.obtenerGrupoComercios(request);
@@ -37,6 +41,11 @@ public class DealersController {
     @GetMapping("/cargarDataVisita")
     public ResponseEntity<?> cargarDataVisita(HttpServletRequest request, @RequestParam Integer idComercio, @RequestParam Integer idGrupo) {
         return visitaService.cargarDataVisita(request, idComercio, idGrupo);
+    }
+
+    @GetMapping("/obtenerDealers")
+    public ResponseEntity<?> obtenerDealers(HttpServletRequest request) {
+        return usuarioService.getAllDealers();
     }
 
 }
