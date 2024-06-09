@@ -1,5 +1,6 @@
 package com.app.appdealers.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Coordenadas {
 
     @OneToOne
     @JoinColumn(name = "fk_local")
+    @JsonIgnore
     private Comercio comercio;
 
 }

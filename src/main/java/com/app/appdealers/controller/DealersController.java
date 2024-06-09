@@ -1,6 +1,8 @@
 package com.app.appdealers.controller;
 
+import com.app.appdealers.dto.CrearComercioDto;
 import com.app.appdealers.dto.RegistroVisitaDto;
+import com.app.appdealers.services.ComercioService;
 import com.app.appdealers.services.UsuarioService;
 import com.app.appdealers.services.VisitaService;
 import com.app.appdealers.util.enums.Respuesta;
@@ -28,6 +30,9 @@ public class DealersController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private ComercioService comercioService;
 
     @GetMapping("/obtenerGrupoComercios")
     public ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request) {
@@ -57,6 +62,11 @@ public class DealersController {
     @GetMapping("/obtenerHistorialVisitas")
     public ResponseEntity<?> obtenerHistorialVisitas(HttpServletRequest request, @RequestParam(required = false) Respuesta respuesta) {
         return visitaService.obtenerHistorialVisitas(request, respuesta);
+    }
+
+    @PostMapping("/crearComercio")
+    public ResponseEntity<?> crearComercio(HttpServletRequest request, @RequestBody CrearComercioDto comercio) {
+        return comercioService.crearComercio(comercio);
     }
 
 }

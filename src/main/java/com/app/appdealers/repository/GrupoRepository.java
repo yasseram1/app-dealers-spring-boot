@@ -24,5 +24,4 @@ public interface GrupoRepository extends JpaRepository<Grupo, Integer>{
     @Query("SELECT g FROM Grupo g WHERE g.usuario.id = :idUser AND g.fase.id = :idPhase")
     public Grupo findGroupByUserIdAndPhaseId(@Param("idUser") Integer idUser, @Param("idPhase") Integer idPhase);
 
-    
 }

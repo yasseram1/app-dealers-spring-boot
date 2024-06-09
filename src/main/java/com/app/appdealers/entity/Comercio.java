@@ -44,6 +44,7 @@ public class Comercio implements Clusterable {
     private Date fechaActualizacion;
 
     @OneToOne(mappedBy = "comercio")
+    @JsonIgnore
     private Coordenadas coordenadas;
 
     @OneToMany(mappedBy = "comercio", fetch = FetchType.LAZY)
@@ -52,6 +53,7 @@ public class Comercio implements Clusterable {
 
     @ManyToOne
     @JoinColumn(name = "fk_grupo")
+    @JsonIgnore
     private Grupo grupo;
 
     @Override

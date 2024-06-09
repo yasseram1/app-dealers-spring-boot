@@ -21,4 +21,8 @@ public interface ComercioRepository extends JpaRepository<Comercio, Integer>  {
     @Transactional
     @Query("UPDATE Comercio c SET c.grupo = null WHERE c.grupo.fase.id = 1 OR c.grupo.fase.id = 3")
     public void setGrupoNullWhereFaseIsOneOrThree();
+
+    @Query("SELECT MAX(c.id) FROM Comercio c")
+    public Integer getLastId();
+
 }
