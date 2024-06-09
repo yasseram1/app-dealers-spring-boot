@@ -95,7 +95,7 @@ public class VisitaServiceImp implements VisitaService {
 
         for(Visita visita : historialVisitas) {
             HistorialVisitasReponse historialVisitasReponse = new HistorialVisitasReponse();
-            historialVisitasReponse.setRuc(visita.getComercio().getRazonSocial());
+            historialVisitasReponse.setRazonSocial(visita.getComercio().getRazonSocial());
             historialVisitasReponse.setFecha(visita.getFechaVisita());
             historialVisitasReponse.setDireccion(visita.getComercio().getDireccion());
             historialVisita.add(historialVisitasReponse);

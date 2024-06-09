@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class HistorialVisitasReponse {
-    private String ruc;
+    private String razonSocial;
     private Date fecha;
     private String direccion;
 }
