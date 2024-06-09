@@ -38,6 +38,7 @@ public class HttpSecurityConfig {
                 authConfig.requestMatchers(HttpMethod.POST, "/api/v0/dealers/registrarVisita**").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/cargarDataVisita**").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerMetricasDealer**").hasAuthority("ROLE_DEALER");
+                authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerHistorialVisitas**").hasAuthority("ROLE_DEALER");
 
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerDealers").hasAuthority("ROLE_ADMIN");
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerMetricasDealer**").hasAuthority("ROLE_ADMIN");

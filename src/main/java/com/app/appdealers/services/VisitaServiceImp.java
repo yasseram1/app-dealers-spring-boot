@@ -1,5 +1,6 @@
 package com.app.appdealers.services;
 
+import com.app.appdealers.dto.HistorialVisitasReponse;
 import com.app.appdealers.dto.RegistroVisitaDto;
 import com.app.appdealers.entity.Comercio;
 import com.app.appdealers.entity.Usuario;
@@ -9,6 +10,7 @@ import com.app.appdealers.repository.GrupoRepository;
 import com.app.appdealers.repository.UsuarioRepository;
 import com.app.appdealers.repository.VisitaRepository;
 import com.app.appdealers.util.UserUtil;
+import com.app.appdealers.util.enums.Respuesta;
 import com.app.appdealers.util.response.MetricasDealer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class VisitaServiceImp implements VisitaService {
@@ -79,6 +79,30 @@ public class VisitaServiceImp implements VisitaService {
         metricasDealer.setCantidadVisitasNuevosTratos(visitaRepository.obtenerCantidadComerciosAfiliados(idUsuario));
 
         return ResponseEntity.ok().body(metricasDealer);
+    }
+
+    @Override
+    public ResponseEntity<?> obtenerHistorialVisitas(HttpServletRequest request, Respuesta respuesta) {
+        List<Visita> historialVisitas;
+        Integer idUsuario = userUtil.getUsuarioFromRequest(request).getId();
+        if(respuesta == null) {
+            historialVisitas =  visitaRepository.obtenerHistorialVisitasParaDealer(idUsuario);
+        } else {
+            historialVisitas =  visitaRepository.obtenerHistorialVisitasParaDealerPorRespuesta(idUsuario, respuesta);;
+        }
+
+        List<HistorialVisitasReponse> historialVisita = new ArrayList<>();
+
+        for(Visita visita : historialVisitas) {
+            HistorialVisitasReponse historialVisitasReponse = new HistorialVisitasReponse();
+            historialVisitasReponse.setRuc(visita.getComercio().getRuc());
+            historialVisitasReponse.setFecha(visita.getFechaVisita());
+            historialVisitasReponse.setDireccion(visita.getComercio().getDireccion());
+            historialVisita.add(historialVisitasReponse);
+        }
+
+        return ResponseEntity.ok().body(historialVisita);
+
     }
 
     private Visita registrarVisita(Usuario usuario, RegistroVisitaDto registroVisitaDto, Comercio comercio) {

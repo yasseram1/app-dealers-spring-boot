@@ -3,6 +3,7 @@ package com.app.appdealers.controller;
 import com.app.appdealers.dto.RegistroVisitaDto;
 import com.app.appdealers.services.UsuarioService;
 import com.app.appdealers.services.VisitaService;
+import com.app.appdealers.util.enums.Respuesta;
 import org.springframework.web.bind.annotation.*;
 
 import com.app.appdealers.services.IGrupoComerciosService;
@@ -51,6 +52,11 @@ public class DealersController {
     @GetMapping("/obtenerMetricasDealer")
     public ResponseEntity<?> obtenerMetricasDealer(HttpServletRequest request, @RequestParam Integer idUsuario) {
         return visitaService.obtenerMetricasDealer(request, idUsuario);
+    }
+
+    @GetMapping("/obtenerHistorialVisitas")
+    public ResponseEntity<?> obtenerHistorialVisitas(HttpServletRequest request, @RequestParam(required = false) Respuesta respuesta) {
+        return visitaService.obtenerHistorialVisitas(request, respuesta);
     }
 
 }
