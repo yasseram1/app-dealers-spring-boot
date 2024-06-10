@@ -72,13 +72,17 @@ public class VisitaServiceImp implements VisitaService {
 
     @Override
     public ResponseEntity<?> obtenerMetricasDealer(HttpServletRequest request, Integer idUsuario) {
-        MetricasDealer metricasDealer = new MetricasDealer();
-        metricasDealer.setPromedioVisitasPorDia(visitaRepository.obtenerPromedioComerciosVisitadosPorDia(idUsuario));
-        metricasDealer.setCantidadVisitasEstadoVisitado(visitaRepository.obtenerCantidadComerciosVisitados(idUsuario));
-        metricasDealer.setPromedioVisitasNuevosTratosPorDia(visitaRepository.obtenerPromedioComercioAfiliados(idUsuario));
-        metricasDealer.setCantidadVisitasNuevosTratos(visitaRepository.obtenerCantidadComerciosAfiliados(idUsuario));
+        try {
+            MetricasDealer metricasDealer = new MetricasDealer();
+            metricasDealer.setPromedioVisitasPorDia(visitaRepository.obtenerPromedioComerciosVisitadosPorDia(idUsuario));
+            metricasDealer.setCantidadVisitasEstadoVisitado(visitaRepository.obtenerCantidadComerciosVisitados(idUsuario));
+            metricasDealer.setPromedioVisitasNuevosTratosPorDia(visitaRepository.obtenerPromedioComercioAfiliados(idUsuario));
+            metricasDealer.setCantidadVisitasNuevosTratos(visitaRepository.obtenerCantidadComerciosAfiliados(idUsuario));
 
-        return ResponseEntity.ok().body(metricasDealer);
+            return ResponseEntity.ok().body(metricasDealer);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @Override

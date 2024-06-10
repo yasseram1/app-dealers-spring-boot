@@ -37,18 +37,15 @@ public class HttpSecurityConfig {
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerGrupoComercios").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.POST, "/api/v0/dealers/registrarVisita**").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/cargarDataVisita**").hasAuthority("ROLE_DEALER");
-                authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerMetricasDealer**").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerHistorialVisitas**").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.POST, "/api/v0/dealers/crearComercio").hasAuthority("ROLE_DEALER");
-                authConfig.requestMatchers(HttpMethod.PUT, "/api/v0/dealers/editarComercio**").hasAuthority("ROLE_DEALER");
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerDataComercio**").hasAuthority("ROLE_DEALER");
-                authConfig.requestMatchers(HttpMethod.DELETE, "/api/v0/dealers/eliminarComercio**").hasAuthority("ROLE_DEALER");
 
                 authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerDealers").hasAuthority("ROLE_ADMIN");
-                authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerMetricasDealer**").hasAuthority("ROLE_ADMIN");
-                authConfig.requestMatchers(HttpMethod.PUT, "/api/v0/dealers/editarComercio**").hasAuthority("ROLE_ADMIN");
-                authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerDataComercio**").hasAuthority("ROLE_ADMIN");
-                authConfig.requestMatchers(HttpMethod.DELETE, "/api/v0/dealers/eliminarComercio**").hasAuthority("ROLE_ADMIN");
+                authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerMetricasDealer**").hasAnyAuthority("ROLE_ADMIN", "ROLE_DEALER");
+                authConfig.requestMatchers(HttpMethod.PUT, "/api/v0/dealers/editarComercio**").hasAnyAuthority("ROLE_ADMIN", "ROLE_DEALER");
+                authConfig.requestMatchers(HttpMethod.GET, "/api/v0/dealers/obtenerDataComercio**").hasAnyAuthority("ROLE_ADMIN", "ROLE_DEALER");
+                authConfig.requestMatchers(HttpMethod.DELETE, "/api/v0/dealers/eliminarComercio**").hasAnyAuthority("ROLE_ADMIN", "ROLE_DEALER");
                 authConfig.anyRequest().denyAll();
             });
 
