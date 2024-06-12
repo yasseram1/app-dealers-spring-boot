@@ -2,10 +2,13 @@ package com.app.appdealers.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import com.app.appdealers.entity.Fase;
 import com.app.appdealers.repository.FaseRepository;
 import com.app.appdealers.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -63,6 +66,24 @@ public class GrupoComerciosServiceImpl implements IGrupoComerciosService {
         grupoComerciosReponseError.setMensaje("No se encontro un grupo");
 
         return new ResponseEntity<>(grupoComerciosReponseError, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity<?> marcarGrupoTerminado(Integer idGrupo) {
+        try {
+            Optional<Grupo> grupoOptional = grupoRepository.findById(idGrupo);
+
+            if(grupoOptional.isPresent()) {
+                Grupo grupo = grupoOptional.get();
+                Fase terminatedFase = faseRepository.findById(3).orElseThrow();
+                grupo.setFase(terminatedFase);
+                grupoRepository.save(grupo);
+            }
+
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     private GrupoComerciosReponse getGrupoComerciosResponse(Grupo grupo) {

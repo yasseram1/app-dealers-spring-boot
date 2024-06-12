@@ -9,5 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface IGrupoComerciosService {
 
     ResponseEntity<GrupoComerciosReponse> obtenerGrupoComercios(HttpServletRequest request);
-    
+
+    ResponseEntity<?> marcarGrupoTerminado(Integer idGrupo);
 }

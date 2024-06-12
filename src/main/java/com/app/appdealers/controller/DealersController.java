@@ -84,4 +84,9 @@ public class DealersController {
         return comercioService.eliminarComercio(idComercio);
     }
 
+    @PutMapping("/marcarGrupoTerminado")
+    public ResponseEntity<?> marcarGrupoTerminado(@RequestParam Integer idGrupo) {
+        return grupoComerciosService.marcarGrupoTerminado(idGrupo);
+    }
+
 }
